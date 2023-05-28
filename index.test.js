@@ -1,9 +1,5 @@
 import { it, expect, describe, beforeEach } from 'vitest';
-import {
-  addEvenNumbers,
-  arrayReduce,
-  multiplyNumbers,
-} from './src/higherOrderFunctions/arrayReduce';
+import { addEvenNumbers, arrayReduce, multiplyNumbers } from './src/higherOrderFunctions/arrayReduce';
 import { calculateAverage } from './src/higherOrderFunctions/calculateAverage';
 import { capitalizeEachWord } from './src/higherOrderFunctions/capitalizeEachWord';
 import { returnNamesStartingWith } from './src/higherOrderFunctions/returnNamesStartingWith';
@@ -84,30 +80,19 @@ describe('Person', () => {
 
 describe('returnNamesStartingWith', () => {
   it('should return all names starting with Character A', () => {
-    const result = returnNamesStartingWith(
-      [{ name: 'Ted' }, { name: 'Ben' }, { name: 'Adam' }],
-      'A'
-    );
+    const result = returnNamesStartingWith([{ name: 'Ted' }, { name: 'Ben' }, { name: 'Adam' }], 'A');
     const expectedResult = [{ name: 'Adam' }];
     expect(result).toEqual(expectedResult);
   });
 
   it('should return all names starting with Character A (default) if starting character not defined', () => {
-    const result = returnNamesStartingWith([
-      { name: 'Ted' },
-      { name: 'Ben' },
-      { name: 'Adam' },
-    ]);
+    const result = returnNamesStartingWith([{ name: 'Ted' }, { name: 'Ben' }, { name: 'Adam' }]);
     const expectedResult = [{ name: 'Adam' }];
     expect(result).toEqual(expectedResult);
   });
 
   it('should return empty array if nothing found', () => {
-    const result = returnNamesStartingWith([
-      { name: 'Ted' },
-      { name: 'Ben' },
-      { name: 'Tess' },
-    ]);
+    const result = returnNamesStartingWith([{ name: 'Ted' }, { name: 'Ben' }, { name: 'Tess' }]);
     const expectedResult = [];
 
     expect(result).toEqual(expectedResult);
