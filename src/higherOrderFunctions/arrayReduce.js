@@ -19,3 +19,19 @@ export const multiplyNumbers = (arr) => {
   });
   return result;
 };
+
+export const reduceFilter = (arr, func) => {
+  return arr.reduce((accumulator, value) => {
+    func(value) && accumulator.push(value);
+    return accumulator;
+  }, []);
+};
+
+export const reduceMax = (arr) => {
+  return arr.reduce((accumulator, value) => {
+    if (accumulator < value) {
+      return value;
+    }
+    return accumulator;
+  }, 0);
+};

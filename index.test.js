@@ -1,5 +1,11 @@
 import { it, expect, describe, beforeEach } from 'vitest';
-import { addEvenNumbers, arrayReduce, multiplyNumbers } from './src/higherOrderFunctions/arrayReduce';
+import {
+  addEvenNumbers,
+  arrayReduce,
+  multiplyNumbers,
+  reduceFilter,
+  reduceMax,
+} from './src/higherOrderFunctions/arrayReduce';
 import { calculateAverage } from './src/higherOrderFunctions/calculateAverage';
 import { capitalizeEachWord } from './src/higherOrderFunctions/capitalizeEachWord';
 import { returnNamesStartingWith } from './src/higherOrderFunctions/returnNamesStartingWith';
@@ -28,6 +34,22 @@ describe('arrayReduce', () => {
     it('should multiply the numbers in a given array', () => {
       const result = multiplyNumbers([1, 2, 3, 4]);
       expect(result).toBe(24);
+    });
+  });
+
+  describe('reduceFilter', () => {
+    it('should return valid values using filter function', () => {
+      const result = reduceFilter([1, 2, 3, 0, 8, 2], (x) => x > 2);
+      const expectedResult = [3, 8];
+      expect(result).toEqual(expectedResult);
+    });
+  });
+
+  describe('reduceMax', () => {
+    it('should return the highest value in array', () => {
+      const result = reduceMax([1, 19, 3, 0, 8, 2, 18]);
+      const expectedResult = 19;
+      expect(result).toEqual(expectedResult);
     });
   });
 });
