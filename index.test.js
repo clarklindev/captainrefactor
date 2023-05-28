@@ -1,12 +1,17 @@
 import { it, expect, describe, beforeEach } from 'vitest';
-import { addEvenNumbers, arrayReduce, multiplyNumbers } from './arrayReduce';
-import { calculateAverage } from './calculateAverage';
-import { capitalizeEachWord } from './capitalizeEachWord';
-import { destructObject } from './destructObject';
-import Person from './Person';
-import { counterFunc } from './closure';
-import { returnNamesStartingWith } from './returnNamesStartingWith';
-import { returnUniqueNumbers } from './returnUniqueNumbers';
+import {
+  addEvenNumbers,
+  arrayReduce,
+  multiplyNumbers,
+} from './src/higherOrderFunctions/arrayReduce';
+import { calculateAverage } from './src/higherOrderFunctions/calculateAverage';
+import { capitalizeEachWord } from './src/higherOrderFunctions/capitalizeEachWord';
+import { returnNamesStartingWith } from './src/higherOrderFunctions/returnNamesStartingWith';
+
+import { destructObject } from './src/destructuring/destructObject';
+import Person from './src/classes/Person';
+import { counterFunc } from './src/closure/closure';
+import { returnUniqueNumbers } from './src/spreadOperator/returnUniqueNumbers';
 
 describe('arrayReduce', () => {
   describe('arrayReduce', () => {
