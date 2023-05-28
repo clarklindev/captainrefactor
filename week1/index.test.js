@@ -4,6 +4,7 @@ import { calculateAverage } from './calculateAverage';
 import { capitalizeEachWord } from './capitalizeEachWord';
 import { destructObject } from './destructObject';
 import Person from './Person';
+import { counterFunc } from './closure';
 import { returnNamesStartingWith } from './returnNamesStartingWith';
 import { returnUniqueNumbers } from './returnUniqueNumbers';
 
@@ -113,5 +114,17 @@ describe('returnUniqueNumbers', () => {
     const result = returnUniqueNumbers([1, 2, 3], [1, 2, 3]);
     const expectedResult = [1, 2, 3];
     expect(result).toEqual(expectedResult);
+  });
+});
+
+describe('closure example', () => {
+  it('should behave like a closure', () => {
+    const counter1 = counterFunc(5);
+
+    const call1 = counter1();
+    const call2 = counter1();
+
+    expect(call1).toBe(5);
+    expect(call2).toBe(10);
   });
 });
