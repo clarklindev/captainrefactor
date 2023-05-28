@@ -7,6 +7,7 @@
 - promises
 - async/await
 - array higher-order functions (reduce)
+- APIs
 
 ```shell
 npm run test
