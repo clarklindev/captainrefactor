@@ -1,9 +1,11 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-
 const bodyParser = require('body-parser');
 const app = express();
+const weatherRoutes = require('./src/routes/weatherRoutes');
+
+require('dotenv').config();
 
 app.use(bodyParser.json()); //parse incoming requests for json data
 
@@ -50,9 +52,7 @@ app.post('/login', (req, res, next) => {
   return res.status(200).json({ message: 'Logged in!' });
 });
 
-app.get('/', (req, res, next) => {
-  res.send('Hello, world!');
-});
+app.use(weatherRoutes);
 
 // Endpoint to download a specific file
 app.get('/download/:filename', (req, res) => {
@@ -74,5 +74,10 @@ app.get('/download/:filename', (req, res) => {
   }
 });
 
+app.get('/', (req, res, next) => {
+  res.send('Hello, world!');
+});
+
 //listen
-app.listen(5000);
+app.listen(3000);
+console.log('listening on port 3000');
