@@ -12,3 +12,7 @@
 ```shell
 npm run test
 ```
+
+## .env
+
+requires api key: https://openweathermap.org
