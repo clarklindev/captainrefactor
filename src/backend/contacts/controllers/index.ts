@@ -23,35 +23,28 @@ export const createContact = async (req: Request, res: Response) => {
     await contact.save();
     res.status(200).json({ status: 'CONTACT CREATED' });
   } catch (err) {
-    console.log(err);
     res.json({ error: err });
   }
 };
 
 export const getContact = async (req: Request, res: Response) => {
   const clientId = req.query.clientId;
-  console.log('clientId: ', clientId);
 
   const queryContact = req.params.id;
-  console.log('queryContact: ', queryContact);
   try {
     const contact = await Contact.where({ clientId: clientId }).where({
       _id: queryContact,
     });
-    console.log('CONTACT: ', contact);
     res.json({ contact });
   } catch (err) {
-    console.log(err);
     res.status(404).json({ error: err });
   }
 };
 
 export const updateContact = async (req: Request, res: Response) => {
   const clientId = req.query.clientId;
-  console.log('clientId: ', clientId);
 
   const queryContact = req.params.id;
-  console.log('queryContact: ', queryContact);
   try {
     const result = await Contact.findOneAndUpdate(
       {
@@ -63,17 +56,14 @@ export const updateContact = async (req: Request, res: Response) => {
     );
     res.json({ status: 'PRODUCT EDITED', result });
   } catch (err) {
-    console.log(err);
     return res.json({ status: 'NOT FOUND' });
   }
 };
 
 export const deleteContact = async (req: Request, res: Response) => {
   const clientId = req.query.clientId;
-  console.log('clientId: ', clientId);
 
   const queryContact = req.params.id;
-  console.log('queryContact: ', queryContact);
   try {
     const result = await Contact.findOneAndDelete({
       clientId: clientId,
@@ -81,7 +71,6 @@ export const deleteContact = async (req: Request, res: Response) => {
     });
     res.json({ status: 'PRODUCT DELETED', result });
   } catch (err) {
-    console.log(err);
     return res.status(404).json({ status: 'NOT FOUND' });
   }
 };

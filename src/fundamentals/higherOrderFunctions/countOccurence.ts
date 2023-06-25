@@ -1,4 +1,4 @@
-export const countOccurrence = (arr: number[]): Record<number, number> => {
+export const countOccurrence = (arr: number[]) => {
   return arr.reduce((accumulator: Record<number, number>, value: number) => {
     if (accumulator[value] === undefined) {
       accumulator[value] = 1;

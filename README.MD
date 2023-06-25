@@ -13,7 +13,7 @@
 
 - use eslint (.eslintrc.json) to show where errors / console.log()s are during development
 
-```
+```shell
 npm run lint:fix
 ```
 

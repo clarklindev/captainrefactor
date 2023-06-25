@@ -9,7 +9,6 @@ export const getHighestTempCity = async (req: Request, res: Response, next: Next
         `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.OPENWEATHER_API}&units=${process.env.WEATHER_UNITS}`
       );
       const responseData = await response.json();
-      console.log('responseData: ', responseData);
       return responseData;
     });
 
@@ -23,7 +22,6 @@ export const getHighestTempCity = async (req: Request, res: Response, next: Next
     });
 
     const returnVal = { city: higestTempCity.name, temperature: higestTempCity.main.temp };
-    console.log('returnVal: ', returnVal);
     res.status(200).json(returnVal);
   } catch (err) {
     const error = new Error('Request invalid');
@@ -51,6 +49,4 @@ export const getCityTemperatures = async (req: Request, res: Response) => {
 
   const responses = await Promise.all(promises);
   res.send({ responses });
-
-  console.log('responses: ', responses);
 };

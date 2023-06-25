@@ -1,5 +1,7 @@
-// var has function-level scope
+/* eslint-disable */
+// purpose of example is to show scoping of i (with errors when using var)
 
+// var has function-level scope
 function a() {
   let y = 0;
   for (
@@ -26,9 +28,7 @@ function b() {
     y++;
   }
 
-  //ReferenceError: i is not defined
-  // eslint-disable-next-line
-  console.log('i: ', i); // eslint-disable-line
+  //console.log('i: ', i); //ERROR: ReferenceError: i is not defined
 
   console.log('y: ', y);
 }

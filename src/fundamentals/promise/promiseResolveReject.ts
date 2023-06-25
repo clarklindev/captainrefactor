@@ -1,6 +1,4 @@
 export const promiseResolveReject = () => {
-  console.log('promiseResolveReject:');
-
   const myVal = new Promise((resolve, reject) => {
     //do something
     const a = 3;
@@ -14,9 +12,10 @@ export const promiseResolveReject = () => {
 
   myVal
     .then((val) => {
-      console.log('myVal: ', val);
+      //do something with val
+      return val;
     })
     .catch((err) => {
-      console.log('err: ', err);
+      throw new Error(err);
     });
 };

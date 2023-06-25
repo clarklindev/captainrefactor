@@ -13,4 +13,4 @@ const Module = (function () {
   };
 })();
 
-console.log(Module.speak('ello'));
+Module.speak('ello');
