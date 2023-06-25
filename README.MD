@@ -11,7 +11,7 @@
 
 ## development build
 
-- use eslint to show where errors / console.log()s are during development
+- use eslint (.eslintrc.json) to show where errors / console.log()s are during development
 
 ```
 npm run lint:fix
@@ -19,7 +19,8 @@ npm run lint:fix
 
 ## production build
 
-- building the project leaves the console.log()'s from codebase intact
+- dist/ folder is excluded from repository
+- building the project 'npm run build' leaves the console.log()'s from codebase intact
 - removes console.logs() with babel plugin: babel-plugin-transform-remove-console specified ini .babelrc
 - package.json script:
 
