@@ -1,4 +1,4 @@
-export const fibonacci = (n) => {
+export const fibonacci = (n: number): number => {
   if (n === 0) {
     return 0;
   }

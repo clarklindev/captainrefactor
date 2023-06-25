@@ -17,7 +17,7 @@ describe('returnNamesStartingWith', () => {
 
   it('should return empty array if nothing found', () => {
     const result = returnNamesStartingWith([{ name: 'Ted' }, { name: 'Ben' }, { name: 'Tess' }]);
-    const expectedResult = [];
+    const expectedResult: Array<Object> = [];
 
     expect(result).toEqual(expectedResult);
   });

@@ -5,7 +5,7 @@
 const myFunc = (function () {
   let privateVariable = 'private';
 
-  function publicSay(word) {
+  function publicSay(word: string) {
     return word;
   }
 
@@ -14,5 +14,3 @@ const myFunc = (function () {
     publicSay: publicSay,
   };
 })();
-
-myFunc();

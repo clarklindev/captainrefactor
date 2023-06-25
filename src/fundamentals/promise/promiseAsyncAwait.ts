@@ -4,7 +4,7 @@ const promiseAsyncAwait = async () => {
   // Simulating an asynchronous operation using a promise
   await new Promise((resolve, reject) =>
     setTimeout(() => {
-      resolve();
+      resolve(true);
     }, 2000)
   );
 

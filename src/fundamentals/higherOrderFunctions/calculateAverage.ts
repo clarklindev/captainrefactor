@@ -1,4 +1,4 @@
-export const calculateAverage = (arr) => {
+export const calculateAverage = (arr: Array<number>) => {
   const result = arr.reduce((accumulator, current) => {
     return accumulator + current;
   }, 0);

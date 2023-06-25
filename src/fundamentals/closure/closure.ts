@@ -12,8 +12,8 @@
 // console.log(counter2()); // 6
 // console.log(counter2()); // 9
 
-export const counterFunc = (num) => {
-  let counter = 0;
+export const counterFunc = (num: number) => {
+  let counter: number = 0;
 
   return function () {
     counter += num;

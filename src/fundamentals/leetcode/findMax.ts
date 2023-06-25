@@ -11,7 +11,7 @@
 // console.log(max([1, 2])); // 2
 // console.log(max([2, 3, 1])); // 3
 
-export const max = (numbers) => {
+export const max = (numbers: Array<number>): any => {
   if (!numbers.length) {
     return undefined;
   }

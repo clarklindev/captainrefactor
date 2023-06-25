@@ -3,7 +3,7 @@
 //in the module pattern it is an IFFE (returning a closure)- returning an object that exposes what you wish to expose
 
 const Module = (function () {
-  const speak = (word) => {
+  const speak = (word: string) => {
     return word;
   };
 

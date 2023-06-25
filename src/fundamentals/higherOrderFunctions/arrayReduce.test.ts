@@ -26,7 +26,7 @@ describe('arrayReduce', () => {
 
   describe('reduceFilter', () => {
     it('should return valid values using filter function', () => {
-      const result = reduceFilter([1, 2, 3, 0, 8, 2], (x) => x > 2);
+      const result = reduceFilter([1, 2, 3, 0, 8, 2], (x: number) => x > 2);
       const expectedResult = [3, 8];
       expect(result).toEqual(expectedResult);
     });

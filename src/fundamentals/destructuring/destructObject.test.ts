@@ -1,10 +1,10 @@
 import { it, expect, describe, beforeEach } from 'vitest';
 
-import { destructObject } from './destructObject';
+import { Person, destructObject } from './destructObject';
 
 describe('destructObject', () => {
   it('should return keys and values of an object', () => {
-    const obj = {
+    const obj: Person = {
       name: 'John',
       age: 30,
       city: 'New York',

@@ -21,6 +21,8 @@ function b() {
   for (let i = 0; i < 10; i++) {
     y++;
   }
+
+  // @ts-ignore
   console.log('i: ', i); //ReferenceError: i is not defined
   console.log('y: ', y);
 }
