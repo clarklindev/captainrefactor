@@ -1,6 +1,6 @@
-const express = require('express');
+import express from 'express';
 
-const { getRoot, getCurrentTime, getUsers, login, downloadFile } = require('../controllers');
+import { getRoot, getCurrentTime, getUsers, login, downloadFile } from '../controllers';
 
 const router = express.Router();
 
@@ -10,4 +10,4 @@ router.get('/getusers', getUsers);
 router.post('/login', login);
 router.get('/download/:filename', downloadFile);
 
-module.exports = router;
+export default router;

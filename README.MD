@@ -2,11 +2,10 @@
 
 ## .env
 
-requires api key: https://openweathermap.org
-requires mongodb access details:
-
-- project: captainrefactor
-- user: clarkcookie
+- requires api key: https://openweathermap.org
+- requires mongodb access details:
+  - project: captainrefactor
+  - user: clarkcookie
 
 ## CRUD setup
 

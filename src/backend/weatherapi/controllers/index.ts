@@ -1,4 +1,6 @@
-exports.getHighestTempCity = async (req, res, next) => {
+import { NextFunction, Request, Response } from 'express';
+
+export const getHighestTempCity = async (req: Request, res: Response, next: NextFunction) => {
   const cityNames = req.params.cityNames.split(',');
 
   try {
@@ -25,13 +27,12 @@ exports.getHighestTempCity = async (req, res, next) => {
     res.status(200).json(returnVal);
   } catch (err) {
     const error = new Error('Request invalid');
-    error.status = 422;
-    res.json({ error: 'request invalid' });
+    res.status(422).json({ error: 'request invalid' });
     next(error);
   }
 };
 
-exports.getCityTemperatures = async (req, res, next) => {
+export const getCityTemperatures = async (req: Request, res: Response, next: NextFunction) => {
   const cityNames = req.params.cityNames.split(',');
 
   const promises = cityNames.map(async (cityName) => {

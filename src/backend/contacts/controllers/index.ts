@@ -1,8 +1,9 @@
-const Contact = require('../models/contact');
-const mongoose = require('mongoose');
+import Contact from '../models/contact';
+import mongoose from 'mongoose';
+import { NextFunction, Request, Response } from 'express';
 
-exports.createContact = async (req, res, next) => {
-  const clientId = req.query.clientId;
+export const createContact = async (req: Request, res: Response, next: NextFunction) => {
+  const clientId = req.query.clientId as string;
 
   // this will be one contact for clientId
   const firstName = req.body.firstName;
@@ -27,7 +28,7 @@ exports.createContact = async (req, res, next) => {
   }
 };
 
-exports.getContact = async (req, res, next) => {
+export const getContact = async (req: Request, res: Response, next: NextFunction) => {
   const clientId = req.query.clientId;
   console.log('clientId: ', clientId);
 
@@ -45,7 +46,7 @@ exports.getContact = async (req, res, next) => {
   }
 };
 
-exports.updateContact = async (req, res, next) => {
+export const updateContact = async (req: Request, res: Response, next: NextFunction) => {
   const clientId = req.query.clientId;
   console.log('clientId: ', clientId);
 
@@ -67,7 +68,7 @@ exports.updateContact = async (req, res, next) => {
   }
 };
 
-exports.deleteContact = async (req, res, next) => {
+export const deleteContact = async (req: Request, res: Response, next: NextFunction) => {
   const clientId = req.query.clientId;
   console.log('clientId: ', clientId);
 
