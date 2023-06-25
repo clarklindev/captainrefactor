@@ -1,83 +1,37 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 const bodyParser = require('body-parser');
-const app = express();
-const weatherRoutes = require('./src/routes/weatherRoutes');
-
+const path = require('path');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
+const app = express();
+const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.b5tvnqi.mongodb.net/?retryWrites=true&w=majority`;
+
+const weatherRoutes = require('./src/backend/weatherapi/routes');
+const testingRoutes = require('./src/backend/testing/routes');
+const contactsRoutes = require('./src/backend/contacts/routes');
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); //parse incoming requests for json data
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/currenttime', (req, res, next) => {
-  const now = new Date();
-  const dateObj = {
-    date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
-    time: now.toLocaleString('en-us', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    }),
-  };
-  res.send(dateObj);
-});
+app.use('/weather', weatherRoutes);
+app.use('/testing', testingRoutes);
+app.use('/contacts', contactsRoutes);
 
-const DUMMY_USERS = [
-  {
-    id: 'u1',
-    name: 'clark',
-    email: 'clark@test.com',
-    password: 'password',
-  },
-  {
-    id: 'u2',
-    name: 'Ted',
-    email: 'ted@test.com',
-    password: 'password',
-  },
-  { id: 'u3', name: 'Ben', email: 'ben@test.com', password: 'password' },
-  { id: 'u4', name: 'Sofie', email: 'sofie@test.com', password: 'password' },
-];
+// app.use((req, res, next) => {
+//   res.status(404).json({ status: 'ERROR', message: 'Page Not Found' });
+// });
 
-app.get('/getusers', (req, res, next) => {
-  res.json(DUMMY_USERS);
-});
+const startConnection = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI, { dbName: 'contacts' });
 
-app.post('/login', (req, res, next) => {
-  const { email, password } = req.body;
-  const foundUser = DUMMY_USERS.find((u) => u.email === email);
-  if (!foundUser || foundUser.password !== password) {
-    return res.status(422).json({ message: 'Invalid data' });
+    const port = process.env.PORT || 3000;
+    app.listen(port);
+    console.log(`listening on port ${port}...`);
+  } catch (err) {
+    console.log(err);
   }
-  return res.status(200).json({ message: 'Logged in!' });
-});
-
-app.use(weatherRoutes);
-
-// Endpoint to download a specific file
-app.get('/download/:filename', (req, res) => {
-  const filename = req.params.filename;
-  const filePath = path.join(__dirname, 'files', filename);
-
-  // Check if the file exists
-  if (fs.existsSync(filePath)) {
-    // Set the appropriate headers for the response
-    res.setHeader('Content-Type', 'application/octet-stream');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-
-    // Create a read stream from the file and pipe it to the response
-    const fileStream = fs.createReadStream(filePath);
-    fileStream.pipe(res);
-  } else {
-    // File not found
-    res.status(404).send('File not found');
-  }
-});
-
-app.get('/', (req, res, next) => {
-  res.send('Hello, world!');
-});
-
-//listen
-app.listen(3000);
-console.log('listening on port 3000');
+};
+startConnection();

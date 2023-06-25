@@ -1,4 +1,4 @@
-const getHighestTempCity = async (req, res, next) => {
+exports.getHighestTempCity = async (req, res, next) => {
   const cityNames = req.params.cityNames.split(',');
 
   try {
@@ -31,7 +31,7 @@ const getHighestTempCity = async (req, res, next) => {
   }
 };
 
-const getCityTemperatures = async (req, res, next) => {
+exports.getCityTemperatures = async (req, res, next) => {
   const cityNames = req.params.cityNames.split(',');
 
   const promises = cityNames.map(async (cityName) => {
@@ -53,6 +53,3 @@ const getCityTemperatures = async (req, res, next) => {
 
   console.log('responses: ', responses);
 };
-
-exports.getHighestTempCity = getHighestTempCity;
-exports.getCityTemperatures = getCityTemperatures;

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getHighestTempCity, getCityTemperatures } = require('../controllers/weatherController');
+const { getHighestTempCity, getCityTemperatures } = require('../controllers');
 
 const router = express.Router();
 
