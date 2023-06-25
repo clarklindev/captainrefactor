@@ -1,13 +1,22 @@
 # captain-refactor
 
-## .env
+- This is a mentorship project where I learn, expand, revise and correct habbits of backend development under mentorship from Tech Principal Developer @captainmike
 
-- requires api key: https://openweathermap.org
-- requires mongodb access details:
+## express/typescript
+
+- https://blog.logrocket.com/how-to-set-up-node-typescript-express/
+- install and initialize dotenv in app.js
+- test with postman
+- add .env to .gitignore
+
+## routes
+
+- "weather/" requires api key: https://openweathermap.org
+- "contacts/" requires mongodb access details:
   - project: captainrefactor
   - user: clarkcookie
 
-## CRUD setup
+## CRUD setup (contacts/)
 
 - mongodb/mongoose
 - mongo atlas db
@@ -16,8 +25,13 @@
 
 ## mongodb/mongoose connection
 
+- use mongo atlas - create user account, db, allow ip
+- dont forget to configure .env with mongodb username/password
+- connection string: <GET FROM MONGODB ATLAS>
+
 ```js
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose'); //commonjs
+import mongoose from 'mongoose'; //esmodule
 
 mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@mongodbURL`);
 ```
@@ -26,7 +40,7 @@ mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PA
 - with model created... pass an object to Product - eg... { title (refers to title from schema) : title (refers to req.body.title) }
 
 ```js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -49,7 +63,12 @@ const productSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Product', productSchema);
+// commonjs
+// module.exports = mongoose.model('Product', productSchema);
+
+// esmodules
+const model = mongoose.model('Product', productSchema);
+export default model;
 ```
 
 ## how are collections made with Mongoose?
@@ -98,32 +117,6 @@ Product.find().select('title price -_id'); //return title, price, not _id
 const products = await Product.find().populate('userId', 'name'); //returns ALWAYS _id unless specified not to, and "name"
 ```
 
-# backend - mongodb - no mongoose
-
-- using express (built ontop of node)
-- from tutorial by maximilianschwarzmuller - nodejs-the-complete-guide: https://github.com/clarklindev/tutorial-maximilianschwarzmuller-nodejs.git
-  - a copy of 10-backend-mongodb-no-mongoose/
-
-### install mongodb
-
-- use mongo atlas - create user account, db, allow ip
-
-- project: NODEJS-THE-COMPLETE-GUIDE-BACKEND-MONGODB-NO-MONGOOSE
-- connection string: mongodb+srv://clarkcookie:<password>@cluster0.g7sijtf.mongodb.net/?retryWrites=true&w=majority
-
-- db collections: orders, products, users
-
-- test with postman
-- dont forget to configure .env with mongodb username/password
-
-```
-npm i mongodb
-```
-
-- install and initialize dotenv in app.js
-- externalize username/password into .env
-- add .env to .gitignore
-
 ### install body-parser
 
 ```shell
@@ -150,11 +143,16 @@ mongodb uses '.\_id' as opposed to '.id'
 
 ## https://www.notion.so/Week-1-23bf15dd489c4f2fa011361db5dc3757?pvs=13
 
-- const, let, var
+- classes
 - closures
-- promises
-- async/await
-- array higher-order functions (reduce)
+- design patterns
+- destructuring
+- higher-order functions
+- leetcode
+- promises / async/await
+- spread operator
+- const, let, var
+
 - APIs
 
 ```shell
