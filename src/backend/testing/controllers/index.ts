@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 const DUMMY_USERS = [
   {
@@ -19,11 +19,11 @@ const DUMMY_USERS = [
   { id: 'u4', name: 'Sofie', email: 'sofie@test.com', password: 'password' },
 ];
 
-export const getRoot = (req: Request, res: Response, next: NextFunction) => {
+export const getRoot = (req: Request, res: Response) => {
   res.json({ status: 'Hello, world!' });
 };
 
-export const getCurrentTime = (req: Request, res: Response, next: NextFunction) => {
+export const getCurrentTime = (req: Request, res: Response) => {
   const now = new Date();
   const dateObj = {
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
@@ -36,11 +36,11 @@ export const getCurrentTime = (req: Request, res: Response, next: NextFunction) 
   res.send(dateObj);
 };
 
-export const getUsers = (req: Request, res: Response, next: NextFunction) => {
+export const getUsers = (req: Request, res: Response) => {
   res.json(DUMMY_USERS);
 };
 
-export const login = (req: Request, res: Response, next: NextFunction) => {
+export const login = (req: Request, res: Response) => {
   const { email, password } = req.body;
   const foundUser = DUMMY_USERS.find((u) => u.email === email);
   if (!foundUser || foundUser.password !== password) {
@@ -50,7 +50,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 };
 
 // Endpoint to download a specific file
-export const downloadFile = (req: Request, res: Response, next: NextFunction) => {
+export const downloadFile = (req: Request, res: Response) => {
   const filename = req.params.filename;
   const filePath = path.join(__dirname, 'files', filename);
 

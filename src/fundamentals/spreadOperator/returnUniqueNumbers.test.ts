@@ -1,4 +1,4 @@
-import { it, expect, describe, beforeEach } from 'vitest';
+import { it, expect, describe } from 'vitest';
 
 import { returnUniqueNumbers } from './returnUniqueNumbers';
 

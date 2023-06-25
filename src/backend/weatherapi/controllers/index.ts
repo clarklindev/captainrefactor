@@ -32,7 +32,7 @@ export const getHighestTempCity = async (req: Request, res: Response, next: Next
   }
 };
 
-export const getCityTemperatures = async (req: Request, res: Response, next: NextFunction) => {
+export const getCityTemperatures = async (req: Request, res: Response) => {
   const cityNames = req.params.cityNames.split(',');
 
   const promises = cityNames.map(async (cityName) => {

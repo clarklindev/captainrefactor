@@ -1,4 +1,4 @@
-import { it, expect, describe, beforeEach } from 'vitest';
+import { it, expect, describe } from 'vitest';
 
 import { returnNamesStartingWith } from './returnNamesStartingWith';
 
@@ -17,7 +17,7 @@ describe('returnNamesStartingWith', () => {
 
   it('should return empty array if nothing found', () => {
     const result = returnNamesStartingWith([{ name: 'Ted' }, { name: 'Ben' }, { name: 'Tess' }]);
-    const expectedResult: Array<Object> = [];
+    const expectedResult: Array<{ name: string }> = [];
 
     expect(result).toEqual(expectedResult);
   });

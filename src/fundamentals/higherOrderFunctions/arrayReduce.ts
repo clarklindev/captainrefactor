@@ -1,12 +1,12 @@
 export const arrayReduce = (arr: Array<number>) => {
-  const sum = arr.reduce((accumulator, val, index, arr) => {
+  const sum = arr.reduce((accumulator, val) => {
     return accumulator + val;
   }, 0);
   return sum;
 };
 
 export const addEvenNumbers = (arr: Array<number>) => {
-  const result = arr.reduce((accumulator, value, index, arr) => {
+  const result = arr.reduce((accumulator, value) => {
     const addValue = value % 2 === 0 ? value : 0;
     return accumulator + addValue;
   }, 0);
@@ -14,13 +14,13 @@ export const addEvenNumbers = (arr: Array<number>) => {
 };
 
 export const multiplyNumbers = (arr: Array<number>) => {
-  const result = arr.reduce((accumulator, current, index, arr) => {
+  const result = arr.reduce((accumulator, current) => {
     return accumulator * current;
   });
   return result;
 };
 
-export const reduceFilter = (arr: Array<number>, func: Function) => {
+export const reduceFilter = (arr: Array<number>, func: (num: number) => boolean) => {
   return arr.reduce((accumulator, value: number, index) => {
     if (func(value)) {
       accumulator.push(arr[index]);

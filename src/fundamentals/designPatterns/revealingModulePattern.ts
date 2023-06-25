@@ -2,8 +2,8 @@
 //Instead of defining public members within the return statement, it maps the private members directly to public ones.
 
 // immediately-invoked function expression (IIFE)
-const myFunc = (function () {
-  let privateVariable = 'private';
+const myFunc = () => {
+  const privateVariable = 'private';
 
   function publicSay(word: string) {
     return word;
@@ -13,4 +13,5 @@ const myFunc = (function () {
     publicVariable: privateVariable,
     publicSay: publicSay,
   };
-})();
+};
+myFunc();

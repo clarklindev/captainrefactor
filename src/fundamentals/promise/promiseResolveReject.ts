@@ -3,8 +3,8 @@ export const promiseResolveReject = () => {
 
   const myVal = new Promise((resolve, reject) => {
     //do something
-    let a = 3;
-    let b = 4;
+    const a = 3;
+    const b = 4;
     if (a + b > 3) {
       return resolve(a + b);
     } else {

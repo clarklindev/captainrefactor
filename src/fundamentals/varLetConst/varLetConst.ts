@@ -2,7 +2,11 @@
 
 function a() {
   let y = 0;
-  for (var i = 0; i < 10; i++) {
+  for (
+    var i = 0;
+    i < 10;
+    i++ // eslint-disable-line
+  ) {
     y++;
   }
 
@@ -22,8 +26,10 @@ function b() {
     y++;
   }
 
-  // @ts-ignore
-  console.log('i: ', i); //ReferenceError: i is not defined
+  //ReferenceError: i is not defined
+  // eslint-disable-next-line
+  console.log('i: ', i); // eslint-disable-line
+
   console.log('y: ', y);
 }
 
