@@ -1,8 +1,8 @@
 import Contact from '../models/contact';
 import mongoose from 'mongoose';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
-export const createContact = async (req: Request, res: Response, next: NextFunction) => {
+export const createContact = async (req: Request, res: Response) => {
   const clientId = req.query.clientId as string;
 
   // this will be one contact for clientId
@@ -28,7 +28,7 @@ export const createContact = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export const getContact = async (req: Request, res: Response, next: NextFunction) => {
+export const getContact = async (req: Request, res: Response) => {
   const clientId = req.query.clientId;
   console.log('clientId: ', clientId);
 
@@ -46,7 +46,7 @@ export const getContact = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-export const updateContact = async (req: Request, res: Response, next: NextFunction) => {
+export const updateContact = async (req: Request, res: Response) => {
   const clientId = req.query.clientId;
   console.log('clientId: ', clientId);
 
@@ -68,7 +68,7 @@ export const updateContact = async (req: Request, res: Response, next: NextFunct
   }
 };
 
-export const deleteContact = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteContact = async (req: Request, res: Response) => {
   const clientId = req.query.clientId;
   console.log('clientId: ', clientId);
 
