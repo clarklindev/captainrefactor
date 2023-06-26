@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const currentTime = () => {
-  return Math.floor(new Date().getTime() / 1000); //.getTime() uses Unix Epoch
-};
-
 const contactSchema = new Schema(
   {
     firstName: {
@@ -33,16 +29,16 @@ const contactSchema = new Schema(
 
     createdAt: {
       type: Number,
-      default: currentTime,
+      immutable: true, //means cant change
+      default: () => Date.now(),
     },
     updatedAt: {
       type: Number,
-      default: currentTime,
+      default: () => Date.now(),
     },
   },
 
-  { timestamps: false, strict: false }
+  { timestamps: false, strict: false, shardKey: { clientId: 1 } } //1 ascending, -1 descending
 );
 
-const model = mongoose.model('Contact', contactSchema);
-export default model;
+export default mongoose.model('Contact', contactSchema);

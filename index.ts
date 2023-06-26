@@ -13,7 +13,6 @@ dotenv.config();
 
 const app: Express = express();
 const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.b5tvnqi.mongodb.net/?retryWrites=true&w=majority`;
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); //parse incoming requests for json data
 app.use(express.static(path.join(__dirname, 'public')));
