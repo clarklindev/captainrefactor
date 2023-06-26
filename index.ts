@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 
 import bodyParser from 'body-parser';
 import path from 'path';
@@ -8,8 +8,7 @@ import mongoose from 'mongoose';
 import weatherRoutes from './src/backend/weatherapi/routes';
 import testingRoutes from './src/backend/testing/routes';
 import contactRoutes from './src/backend/contacts/routes';
-
-dotenv.config();
+import Contact from './src/backend/contacts/models/contact';
 
 const app: Express = express();
 const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.b5tvnqi.mongodb.net/?retryWrites=true&w=majority`;
@@ -27,7 +26,13 @@ app.use('/contacts', contactRoutes);
 
 const startConnection = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, { dbName: 'contacts' });
+    const dbName = 'contacts';
+
+    await mongoose.connect(MONGODB_URI, { dbName });
+
+    //Create indexes and shard the collection
+    // await Contact.createIndexes();
+    // mongoose.connection.db.admin().command({ shardCollection: `${dbName}.Contact`, key: { clientId: 1 } });
 
     const port = process.env.PORT || 3000;
     app.listen(port);
