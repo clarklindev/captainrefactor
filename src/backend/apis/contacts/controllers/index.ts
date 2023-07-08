@@ -1,18 +1,27 @@
 import Contact from '../models/contact';
 import mongoose from 'mongoose';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import DateHelper from '../../../../fundamentals/classes/DateHelper';
+import { validationResult } from 'express-validator';
 
 interface ContactAttributes {
   [key: string]: any;
 }
 
-export const createContact = async (req: Request, res: Response) => {
+export const createContact = async (req: Request, res: Response, next: NextFunction) => {
   const reqClientId = req.query.clientId as string;
 
   const attributes: ContactAttributes = {};
   for (const [key, value] of Object.entries(req.body)) {
     attributes[key] = value;
+  }
+
+  //validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('Validation failed');
+    res.status(422);
+    throw error;
   }
 
   const contact = new Contact({
@@ -52,8 +61,11 @@ export const createContact = async (req: Request, res: Response) => {
 
       res.status(201).json(response);
     }
-  } catch (errors) {
-    res.status(422).json({ errors });
+  } catch (errors: any) {
+    if (!res.status) {
+      res.status(500);
+    }
+    next(errors);
   }
 };
 
@@ -105,9 +117,17 @@ export const getContact = async (req: Request, res: Response) => {
   }
 };
 
-export const updateContact = async (req: Request, res: Response) => {
+export const updateContact = async (req: Request, res: Response, next: NextFunction) => {
   const reqClientId = req.query.clientId as string;
   const reqQueryContact = req.params.id;
+
+  //validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error('Validation failed');
+    res.status(422);
+    throw error;
+  }
 
   try {
     const updates: ContactAttributes = {};
@@ -141,8 +161,11 @@ export const updateContact = async (req: Request, res: Response) => {
       };
       res.status(200).json(response);
     }
-  } catch (errors) {
-    return res.status(422).json({ errors });
+  } catch (errors: any) {
+    if (!res.status) {
+      res.status(500);
+    }
+    next(errors);
   }
 };
 

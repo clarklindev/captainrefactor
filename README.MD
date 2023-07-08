@@ -137,7 +137,20 @@ Product.find().select('title price -_id'); //return title, price, not _id
 const products = await Product.find().populate('userId', 'name'); //returns ALWAYS _id unless specified not to, and "name"
 ```
 
-### install body-parser
+### install body-parser \*DEPRECATED
+
+- note: since express 4.16 it is not necessary to import body-parser
+
+#### NEW METHOD
+
+```js
+import express, { Express } from 'express';
+
+app.use(express.json()); //parse incoming requests for json data
+app.use(express.urlencoded({ extended: true })); //form data
+```
+
+#### OLD METHOD
 
 ```shell
 npm i body-parser
@@ -145,6 +158,7 @@ npm i body-parser
 
 ```js
 app.use(bodyParser.json()); //get data from form - by parsing the body of the
+app.use(bodyParser.urlencoded({ extended: false }));
 ```
 
 ## mongodb id
@@ -177,4 +191,16 @@ mongodb uses '.\_id' as opposed to '.id'
 
 ```shell
 npm run test
+```
+
+### Google phone number library
+
+- npm module: google-libphonenumber
+
+https://www.npmjs.com/package/google-libphonenumber
+
+```js
+import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
+// Get an instance of `PhoneNumberUtil`.
+const phoneUtil = PhoneNumberUtil.getInstance();
 ```
