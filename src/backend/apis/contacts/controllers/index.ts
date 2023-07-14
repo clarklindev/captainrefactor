@@ -6,7 +6,7 @@ import Contact from '../models/contact';
 import DateHelper from '../../../../fundamentals/classes/DateHelper';
 import { IContact } from '../../../interfaces/IContact';
 import { IRequest } from '../../../interfaces/IRequest';
-import { isPhoneNumber } from '../../../validation/phoneNumber';
+import { isPhoneNumber } from '../../../validators/phoneNumber';
 
 const constraints = {
   email: {
