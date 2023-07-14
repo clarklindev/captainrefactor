@@ -10,7 +10,7 @@ import contactRoutes from './backend/apis/contacts/routes';
 
 const app: Express = express();
 const MONGODB_URI = `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@ac-yztvzc4-shard-00-00.b5tvnqi.mongodb.net:27017,ac-yztvzc4-shard-00-01.b5tvnqi.mongodb.net:27017,ac-yztvzc4-shard-00-02.b5tvnqi.mongodb.net:27017/?ssl=true&replicaSet=atlas-dbcw9j-shard-0&authSource=admin&retryWrites=true&w=majority`;
-app.use(express.json()); //parse incoming requests for json data
+app.use(express.json()); //parse incoming requests for json data (replaces body-parser)
 app.use(express.urlencoded({ extended: true })); //form data
 app.use(express.static(path.join(__dirname, 'public')));
 

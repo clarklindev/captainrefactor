@@ -15,11 +15,9 @@ const contactSchema = new Schema<IContact>(
   {
     firstName: {
       type: String,
-      required: false,
     },
     lastName: {
       type: String,
-      required: false,
     },
     email: {
       type: String,
@@ -27,7 +25,6 @@ const contactSchema = new Schema<IContact>(
     },
     phoneNumber: {
       type: String,
-      required: false,
     },
 
     clientId: {
