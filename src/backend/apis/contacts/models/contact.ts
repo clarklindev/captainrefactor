@@ -1,15 +1,7 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import DateHelper from '../../../../fundamentals/classes/DateHelper';
+import mongoose, { Schema } from 'mongoose';
 
-export interface IContact extends Document {
-  clientId: mongoose.Types.ObjectId;
-  createdAt: number;
-  updatedAt: number;
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  phoneNumber?: string;
-}
+import { IContact } from '../interfaces/IContact';
+import DateHelper from '../../../../fundamentals/classes/DateHelper';
 
 const contactSchema = new Schema<IContact>(
   {
@@ -26,7 +18,9 @@ const contactSchema = new Schema<IContact>(
     phoneNumber: {
       type: String,
     },
-
+    defaultCountryCode: {
+      type: String,
+    },
     clientId: {
       type: Schema.Types.ObjectId,
       ref: 'Contact',

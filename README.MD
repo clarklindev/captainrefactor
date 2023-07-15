@@ -36,7 +36,7 @@ npm run removelogs
   - project: captainrefactor
   - user: clarkcookie
 
-## CRUD setup (contacts/)
+## CRUD / REST API setup (contacts/)
 
 - mongodb/mongoose
 - mongo atlas db
@@ -47,7 +47,8 @@ npm run removelogs
 
 - use mongo atlas - create user account, db, allow ip
 - dont forget to configure .env with mongodb username/password
-- connection string: <GET FROM MONGODB ATLAS>
+- connection string: <GET THIS FROM MONGODB ATLAS>
+- use atlas node 2.12.2 connection url \*if 5.5 doesnt work
 
 ```js
 // const mongoose = require('mongoose'); //commonjs
@@ -174,24 +175,6 @@ const query = { _id: new mongodb.ObjectId(productId) };
 mongodb uses '.\_id' as opposed to '.id'
 
 ---
-
-## https://www.notion.so/Week-1-23bf15dd489c4f2fa011361db5dc3757?pvs=13
-
-- classes
-- closures
-- design patterns
-- destructuring
-- higher-order functions
-- leetcode
-- promises / async/await
-- spread operator
-- const, let, var
-
-- APIs
-
-```shell
-npm run test
-```
 
 ### Google phone number library
 

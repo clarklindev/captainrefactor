@@ -37,9 +37,16 @@ export const getCurrentTime = (req: Request, res: Response) => {
 };
 
 export const getUsers = (req: Request, res: Response) => {
-  res.json(DUMMY_USERS);
+  res.status(200).json({
+    data: {
+      attributes: {
+        users: DUMMY_USERS,
+      },
+    },
+  });
 };
 
+// this is not real authentication but rather to test mongodb finding user and matching password with what was posted in
 export const login = (req: Request, res: Response) => {
   const { email, password } = req.body;
   const foundUser = DUMMY_USERS.find((u) => u.email === email);

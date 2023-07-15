@@ -4,8 +4,11 @@ import validate from 'validate.js';
 
 import Contact from '../models/contact';
 import DateHelper from '../../../../fundamentals/classes/DateHelper';
-import { IContact } from '../../../interfaces/IContact';
-import { IRequest } from '../../../interfaces/IRequest';
+import { IContact } from '../interfaces/IContact';
+import { IRequest } from '../interfaces/IRequest';
+import { JsonApiError } from '../interfaces/JsonApiError';
+import { ValidateJsError } from '../interfaces/ValidateJsError';
+
 import { isPhoneNumber } from '../../../validators/phoneNumber';
 
 const constraints = {
@@ -42,28 +45,35 @@ const constraints = {
   },
 };
 
+//add custom validator
+validate.validators.isPhoneNumber = isPhoneNumber;
+
 export const createContact = async (req: IRequest, res: Response, next: NextFunction) => {
   const reqClientId = req.query.clientId as string;
 
   if (req.body.data) {
-    const attributes: IContact = {};
+    const attributes = {} as IContact;
     for (const [key, value] of Object.entries(req.body.data.attributes)) {
       attributes[key] = value;
     }
 
-    //add custom validator
-    validate.validators.isPhoneNumber = isPhoneNumber;
-
     //validate
     const trimmedInput = validate.cleanAttributes(attributes, constraints); //trim whitespace
-    const validationErrors = validate(trimmedInput, constraints);
+    const validationErrors = validate(trimmedInput, constraints, { format: 'detailed' });
 
     if (validationErrors) {
-      // Handle validation errors
-      return res.status(500).json({ validationErrors: validationErrors });
-    }
+      const formatedErrors = validationErrors.map((e: ValidateJsError) => {
+        return {
+          status: '422',
+          source: { pointer: `data/attributes/${e.attribute}` },
+          title: `Error: ${e.attribute}`,
+          detail: e.error,
+        } as JsonApiError;
+      });
 
-    console.log('Validation passed');
+      // Handle validation errors
+      res.status(500).json({ errors: formatedErrors });
+    }
 
     const contact = new Contact({
       ...attributes,
@@ -73,7 +83,7 @@ export const createContact = async (req: IRequest, res: Response, next: NextFunc
     try {
       if (contact) {
         await contact.save();
-        const { _id, clientId, createdAt, updatedAt, __v, ...attributes } = contact.toObject();
+        const { _id, clientId, createdAt, updatedAt, ...attributes } = contact.toObject();
 
         const response = {
           data: {
@@ -86,27 +96,16 @@ export const createContact = async (req: IRequest, res: Response, next: NextFunc
                 modified: DateHelper.unixEpochToRFC3339_ISO8601(updatedAt),
               },
             },
-            links: {
-              self: `/contacts/${clientId}`,
-            },
-            relationships: {
-              clientId: {
-                data: {
-                  id: clientId,
-                  type: 'contacts',
-                },
-              },
-            },
           },
         };
 
         res.status(201).json(response);
       }
-    } catch (errors: any) {
+    } catch (error) {
       if (!res.status) {
         res.status(500);
       }
-      next(errors);
+      next(error);
     }
   }
 };
@@ -138,17 +137,6 @@ export const getContact = async (req: Request, res: Response) => {
               modified: DateHelper.unixEpochToRFC3339_ISO8601(updatedAt),
             },
           },
-          links: {
-            self: `/contacts/${reqQueryContact}?clientId=${reqClientId}`,
-          },
-          relationships: {
-            clientId: {
-              data: {
-                id: clientId,
-                type: 'contacts',
-              },
-            },
-          },
         },
       };
 
@@ -163,51 +151,64 @@ export const updateContact = async (req: Request, res: Response, next: NextFunct
   const reqClientId = req.query.clientId as string;
   const reqQueryContact = req.params.id;
 
-  //validation errors
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   const error = new Error('Validation failed');
-  //   res.status(422);
-  //   throw error;
-  // }
-
-  try {
-    const updates: IContact = {};
-    for (const [key, value] of Object.entries(req.body)) {
+  if (req.body.data) {
+    const updates = {} as IContact;
+    for (const [key, value] of Object.entries(req.body.data.attributes)) {
       updates[key] = value;
     }
 
-    const contact = await Contact.findOneAndUpdate(
-      { clientId: new mongoose.Types.ObjectId(reqClientId), _id: reqQueryContact },
-      { ...updates, updatedAt: DateHelper.jsDateNowToUnixEpoch(Date.now()) },
-      {
-        timeStamps: false,
-        lean: true,
-        new: true,
-      }
-    );
+    //validate
+    const trimmedInput = validate.cleanAttributes(updates, constraints); //trim whitespace
+    const validationErrors = validate(trimmedInput, constraints, { format: 'detailed' });
 
-    if (contact) {
-      const response = {
-        data: {
-          id: contact._id,
-          type: 'contacts',
-          attributes: {
-            ...updates,
-            timestamps: {
-              created: DateHelper.unixEpochToRFC3339_ISO8601(contact.createdAt),
-              modified: DateHelper.unixEpochToRFC3339_ISO8601(contact.updatedAt),
+    if (validationErrors) {
+      const formatedErrors = validationErrors.map((e: ValidateJsError) => {
+        return {
+          status: '422',
+          source: { pointer: `data/attributes/${e.attribute}` },
+          title: `Error: ${e.attribute}`,
+          detail: e.error,
+        } as JsonApiError;
+      });
+
+      // Handle validation errors
+      return res.status(500).json({ errors: formatedErrors });
+    }
+
+    //this is what happens when there is no error
+    try {
+      const contact = await Contact.findOneAndUpdate(
+        { clientId: new mongoose.Types.ObjectId(reqClientId), _id: reqQueryContact },
+        { ...updates, updatedAt: DateHelper.jsDateNowToUnixEpoch(Date.now()) },
+        {
+          timeStamps: false,
+          lean: true,
+          new: true,
+        }
+      );
+
+      if (contact) {
+        const response = {
+          data: {
+            id: contact._id,
+            type: 'contacts',
+            attributes: {
+              ...updates,
+              timestamps: {
+                created: DateHelper.unixEpochToRFC3339_ISO8601(contact.createdAt),
+                modified: DateHelper.unixEpochToRFC3339_ISO8601(contact.updatedAt),
+              },
             },
           },
-        },
-      };
-      res.status(200).json(response);
+        };
+        res.status(200).json(response);
+      }
+    } catch (error) {
+      if (!res.status) {
+        res.status(500);
+      }
+      next(error);
     }
-  } catch (errors: any) {
-    if (!res.status) {
-      res.status(500);
-    }
-    next(errors);
   }
 };
 

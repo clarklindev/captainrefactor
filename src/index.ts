@@ -4,7 +4,7 @@ import 'dotenv/config';
 import path from 'path';
 import mongoose from 'mongoose';
 
-import weatherRoutes from './backend/apis/weatherapi/routes';
+import weatherRoutes from './backend/apis/weather/routes';
 import testingRoutes from './backend/apis/testing/routes';
 import contactRoutes from './backend/apis/contacts/routes';
 
@@ -18,7 +18,7 @@ app.use('/weather', weatherRoutes);
 app.use('/testing', testingRoutes);
 app.use('/contacts', contactRoutes);
 
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).json({ status: 'ERROR', message: 'Page Not Found' });
 });
 

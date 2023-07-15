@@ -8,6 +8,7 @@ export interface IRequest extends Request {
         firstName?: string;
         lastName?: string;
         phoneNumber?: string;
+        defaultCountryCode?: string;
       };
     };
   };

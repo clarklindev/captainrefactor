@@ -6,8 +6,9 @@ const router = express.Router();
 
 router.get('/', getRoot);
 router.get('/currenttime', getCurrentTime);
-router.get('/getusers', getUsers);
-router.post('/login', login);
+router.get('/users', getUsers);
 router.get('/download/:filename', downloadFile);
+
+router.post('/login', login);
 
 export default router;
