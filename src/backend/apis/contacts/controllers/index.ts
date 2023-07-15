@@ -45,9 +45,6 @@ const constraints = {
   },
 };
 
-//add custom validator
-validate.validators.isPhoneNumber = isPhoneNumber;
-
 export const createContact = async (req: IRequest, res: Response, next: NextFunction) => {
   const reqClientId = req.query.clientId as string;
 
@@ -57,9 +54,12 @@ export const createContact = async (req: IRequest, res: Response, next: NextFunc
       attributes[key] = value;
     }
 
-    //validate
+    validate.validators.isPhoneNumber = isPhoneNumber;
+
     const trimmedInput = validate.cleanAttributes(attributes, constraints); //trim whitespace
-    const validationErrors = validate(trimmedInput, constraints, { format: 'detailed' });
+    const validationErrors = validate(trimmedInput, constraints, {
+      format: 'detailed',
+    });
 
     if (validationErrors) {
       const formatedErrors = validationErrors.map((e: ValidateJsError) => {

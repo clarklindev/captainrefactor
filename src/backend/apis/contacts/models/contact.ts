@@ -18,9 +18,7 @@ const contactSchema = new Schema<IContact>(
     phoneNumber: {
       type: String,
     },
-    defaultCountryCode: {
-      type: String,
-    },
+
     clientId: {
       type: Schema.Types.ObjectId,
       ref: 'Contact',
